@@ -1,0 +1,59 @@
+syntax = "proto3";
+
+package com.thanos.api.proto.broadcast;
+
+option java_package = "com.thanos.api.proto.broadcast";
+
+//class文件的名称
+option java_outer_classname = "BroadcastGrpcTransport";
+
+//如果是false 每个message和service都会是java_outer_classname的内部类，相反则单独生成类文件，防止生成类文件过大
+option java_multiple_files = true;
+
+//服务接口定义，服务端和客户端都要遵循该接口进行通信
+service BroadcastService{
+  //接收请求，返回响应
+  rpc transportEthTransactions(EthTransactionsBroadcastDTO) returns(DefaultResponse){}
+  rpc transportGlobalNodeEvents(GlobalNodeEventsBroadcastDTO) returns(DefaultResponse){}
+  rpc findNodes(NodesBroadcastDTO) returns(NodesBroadcastDTO){}
+
+}
+
+message DefaultRequest{
+  string param = 1;
+}
+
+//定义响应消息
+message DefaultResponse{
+  bool result = 1;
+}
+
+message NodesBroadcastDTO{
+  message NodeBroadcastDTO{
+    string id = 1;
+    string ip = 2;
+    int32 port = 3;
+  }
+  repeated NodeBroadcastDTO nodes = 1;
+}
+
+message EthTransactionsBroadcastDTO{
+  message EthTransactionBroadcastDTO{
+    int32 fromType = 1;
+    bytes rlpEncoded = 2;
+  }
+  repeated EthTransactionBroadcastDTO txs = 1;
+}
+
+
+
+message GlobalNodeEventsBroadcastDTO{
+  message GlobalNodeEventBroadcastDTO{
+      int32 fromType = 1;
+      bytes rlpEncoded = 2;
+  }
+  repeated GlobalNodeEventBroadcastDTO globalNodeEvents = 1;
+}
+
+
+

@@ -1,0 +1,15 @@
+.classpath
+.project
+.settings
+.idea
+*.iml
+.idea/workspace.xml
+target
+/log/
+/logs/
+/logs/thanos-gateway.log
+/logs/thanos.log
+logsss/
+
+*.log
+log*/

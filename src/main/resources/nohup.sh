@@ -1,0 +1,1 @@
+nohup sh start.sh &
